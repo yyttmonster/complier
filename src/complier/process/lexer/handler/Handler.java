@@ -10,8 +10,8 @@ import java.util.HashMap;
 
 /**
  * @author 余
- * handle the String array deal by preprocess
- * output word
+ *         handle the String array deal by preprocess
+ *         output word
  */
 public class Handler {
 
@@ -100,7 +100,7 @@ public class Handler {
                     contact(ch);
                     position++;
                 }
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 //do nothing because it only represents that this operator has only one char
             }
         }

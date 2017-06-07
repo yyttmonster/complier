@@ -2,13 +2,14 @@ package complier.process.error;
 
 /**
  * @author 余
- * IllegalCharException class
+ *         IllegalCharException class
  */
-public class IllegalCharException extends  Exception{
+public class IllegalCharException extends Exception {
 
-    public IllegalCharException(){}
+    public IllegalCharException() {
+    }
 
-    public IllegalCharException (String message){
+    public IllegalCharException(String message) {
         super(message);
     }
 
