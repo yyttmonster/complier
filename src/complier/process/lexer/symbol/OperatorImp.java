@@ -10,7 +10,7 @@ import java.util.HashMap;
  * the identity of logical operator is between 31 to 40
  * 41 to 49 is reservation
  */
-public class Operator {
+public class OperatorImp implements SymbolInterface {
 
     /**
      * operate +
@@ -87,23 +87,23 @@ public class Operator {
      */
     private static final int NOTEQUAL = 39;
 
-
-    public void getMap (HashMap<String,Integer> hashMap){
-        hashMap.put("+",PLUS);
-        hashMap.put("++",SELFINCREASE);
-        hashMap.put("-",SUBTRACT);
-        hashMap.put("--",SELFDECREASE);
-        hashMap.put("*",MULTIPLY);
-        hashMap.put(":=",EQUAL);
-        hashMap.put("&&",AND);
-        hashMap.put("||",OR);
-        hashMap.put("!",NOT);
-        hashMap.put(">",MORE);
-        hashMap.put(">=",MOREEQUAL);
-        hashMap.put("<",LESS);
-        hashMap.put("<=",LESSEQUAL);
-        hashMap.put("=",ISEQUAL);
-        hashMap.put("!=",NOTEQUAL);
+    @Override
+    public void getMap(HashMap<String, Integer> hashMap) {
+        hashMap.put("+", PLUS);
+        hashMap.put("++", SELFINCREASE);
+        hashMap.put("-", SUBTRACT);
+        hashMap.put("--", SELFDECREASE);
+        hashMap.put("*", MULTIPLY);
+        hashMap.put(":=", EQUAL);
+        hashMap.put("&&", AND);
+        hashMap.put("||", OR);
+        hashMap.put("!", NOT);
+        hashMap.put(">", MORE);
+        hashMap.put(">=", MOREEQUAL);
+        hashMap.put("<", LESS);
+        hashMap.put("<=", LESSEQUAL);
+        hashMap.put("=", ISEQUAL);
+        hashMap.put("!=", NOTEQUAL);
     }
 
 }

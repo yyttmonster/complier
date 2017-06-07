@@ -7,7 +7,7 @@ import java.util.HashMap;
  * a identity correspond a keyword
  * the identity of other keyword is between 11 to 20
  */
-public class Reservation {
+public class ReservationImp implements SymbolInterface {
 
     private static final int IF = 11;
 
@@ -21,12 +21,13 @@ public class Reservation {
 
 //    private static final int ARRAY = 16;
 
-    public void getMap (HashMap<String,Integer> hashMap){
-        hashMap.put("if",IF);
-        hashMap.put("then",THEN);
-        hashMap.put("else",ELSE);
-        hashMap.put("while",WHILE);
-        hashMap.put("do",DO);
+    @Override
+    public void getMap(HashMap<String, Integer> hashMap) {
+        hashMap.put("if", IF);
+        hashMap.put("then", THEN);
+        hashMap.put("else", ELSE);
+        hashMap.put("while", WHILE);
+        hashMap.put("do", DO);
 //        hashMap.put("array",ARRAY);
     }
 }

@@ -1,14 +1,20 @@
 package complier.Main;
 
+import complier.process.error.IllegalCharException;
+import complier.process.lexer.handler.Handler;
 import complier.process.lexer.preprocess.Preprocess;
 
 /**
- * Created by 余 on 2017/6/4.
+ * test
  */
 public class MainProgram {
 
-    public static void main(String[] args){
-        Preprocess preprocess = new Preprocess();
-
+    public static void main(String[] args) {
+        Handler handler = new Handler();
+        try {
+            handler.deal("while ( i > j )");
+        } catch (IllegalCharException e) {
+            e.printStackTrace();
+        }
     }
 }
