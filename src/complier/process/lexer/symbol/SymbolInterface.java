@@ -9,9 +9,9 @@ import java.util.HashMap;
 public interface SymbolInterface {
 
     /**
-     * put element to hashMap
+     * put elements to hashMap
      *
-     * @param hashMap target map , element will be put into this hashMap
+     * @param hashMap target map , elements will be put into this hashMap
      */
     void getMap(HashMap<String, Integer> hashMap);
 }

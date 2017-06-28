@@ -12,7 +12,7 @@ public class MainProgram {
     public static void main(String[] args) {
         Handler handler = new Handler();
         try {
-            handler.deal("while ( i > j )");
+            handler.deal("while ( i>= j ){1+1 != 2;}");
         } catch (IllegalCharException e) {
             e.printStackTrace();
         }

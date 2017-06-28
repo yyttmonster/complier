@@ -24,4 +24,9 @@ public class ConstantImp implements SymbolInterface {
         hashMap.put("boolean", BOOLEAN);
     }
 
+    public void printTeast(){
+        System.out.print("haha");
+    }
+
+
 }
