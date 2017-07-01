@@ -1,11 +1,7 @@
 package complier.Main;
 
-import complier.process.error.IllegalCharException;
-import complier.process.lexer.handler.Handler;
-import complier.process.lexer.preprocess.Preprocess;
-import complier.process.parse.production.ProductionSet;
-
-import java.util.HashSet;
+import complier.process.parse.lltable.LL1Table;
+import complier.process.parse.production.ProductionSets;
 
 /**
  * test
@@ -22,7 +18,11 @@ public class MainProgram {
 //        }
 
 
-        ProductionSet productionSet = new ProductionSet();
-        productionSet.setProductionSet();
+//        ProductionSets productionSets = new ProductionSets();
+//        System.out.println(productionSets.getCurrentNumber());
+//        productionSet.setProductionSet();
+
+        LL1Table ll1Table = new LL1Table();
+        ll1Table.printTable();
     }
 }

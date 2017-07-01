@@ -10,7 +10,7 @@ import java.util.Set;
  *         a array whose the first element is production's left part and others is right part
  *         It will be caled by ll(1) table to build ll(1) table
  */
-public class ProductionSet {
+public class ProductionSets {
 
     /**
      * * declaration
@@ -27,6 +27,10 @@ public class ProductionSet {
     private String[][] productionSet = new String[productionNumber][MAXWIDTH];
     private HashMap<String, HashSet<String>> firstSet = new HashMap<>();
     private HashMap<String, HashSet<String>> followSet = new HashMap<>();
+
+    public ProductionSets() {
+        setProductionSet();
+    }
 
     /**
      * every character of production you defining must divided by space
@@ -67,13 +71,13 @@ public class ProductionSet {
         setFollowSet();
         setFollowSet();
         setFollowSet();
-        for (String string : nonterminals) {
-            System.out.print(string + ":  ");
-            for (String firstChar : followSet.get(string)) {
-                System.out.print(firstChar + ",");
-            }
-            System.out.println();
-        }
+//        for (String string : nonterminals) {
+//            System.out.print(string + ":  ");
+//            for (String firstChar : followSet.get(string)) {
+//                System.out.print(firstChar + ",");
+//            }
+//            System.out.println();
+//        }
     }
 
     /**
@@ -125,7 +129,7 @@ public class ProductionSet {
             for (; productionSet[i][j] != null && j < MAXWIDTH; j++) {
                 if (nonterminals.contains(productionSet[i][j])) {
                     // add followSet of left into the followSet of the character which is at end of right part
-                    for (int increament = 1; j + increament < MAXWIDTH && productionSet[i][j+increament] != null; increament++) {
+                    for (int increament = 1; j + increament < MAXWIDTH && productionSet[i][j + increament] != null; increament++) {
                         // the next character is nonterminals, therefor add the firstSet of it into followSet of current character
                         // and if the next character's firstSet contain "nought" check it's next character
                         // non -> aerfa currentChar beita ,add firstSet of beita into currentChar
@@ -150,8 +154,7 @@ public class ProductionSet {
                 if (nonterminals.contains(productionSet[i][j])) {
                     followSet.get(productionSet[i][j]).addAll(followSet.get(productionSet[i][0]));
                     if (!firstSet.get(productionSet[i][j]).contains("nought")) break;
-                }
-                else break;
+                } else break;
             }
         }
     }
@@ -192,6 +195,10 @@ public class ProductionSet {
 
     public int getProductionNumber() {
         return productionNumber;
+    }
+
+    public int getMAXWIDTH() {
+        return MAXWIDTH;
     }
 
     public int getCurrentNumber() {
