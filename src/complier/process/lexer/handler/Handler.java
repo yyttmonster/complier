@@ -29,6 +29,7 @@ public class Handler {
     public StringBuffer deal(String stringLine) throws IllegalCharException {
         Preprocess preprocess = new Preprocess();
         String[] afterPreprocess = preprocess.handle(stringLine);
+        if (afterPreprocess == null) return null;
         for (String currentString : afterPreprocess) {
             determineStrToken(0, currentString);
         }
@@ -81,17 +82,17 @@ public class Handler {
                     continue;
                 }
                 code = symbolCollection.getSymbolType(strToken);
-                if (code > 0) translate(strToken,  2);
-                else translate(strToken,  1);
-                System.out.println(strToken);//填入表
+                if (code > 0) translate(strToken, 2);
+                else translate(strToken, 1);
+                System.out.println(strToken+":"+code);//填入表
                 determineStrToken(i, str);
                 return;
             }
             if (strToken.equals("_")) throw new IllegalCharException("非法字符!");
             code = symbolCollection.getSymbolType(strToken);
-            if (code > 0) translate(strToken,  2);
-            else translate(strToken,  1);
-            System.out.println(strToken);//填入表
+            if (code > 0) translate(strToken, 2);
+            else translate(strToken, 1);
+            System.out.println(strToken+":"+code);//填入表
             return;
         }
 //        try {
@@ -116,7 +117,7 @@ public class Handler {
                 //do nothing because it only represents that this operator has only one char
             }
         }
-        translate(strToken,2);
+        translate(strToken, 2);
         System.out.println(strToken + ":" + code);//填表
         if (position + 1 < str.length()) determineStrToken(position + 1, str);
         return;
@@ -170,8 +171,8 @@ public class Handler {
     /**
      * translate string input into a sentence that can be checked by parse program
      *
-     * @param s            a string that could be contact to result
-     * @param type         identity the type of s , 0 -> digit ,1 -> variables, 2 keyword
+     * @param s    a string that could be contact to result
+     * @param type identity the type of s , 0 -> digit ,1 -> variables, 2 keyword
      */
     public void translate(String s, int type) {
         if (type == 0) {
@@ -183,7 +184,7 @@ public class Handler {
             return;
         }
         if (type == 2) {
-            resultString.append(s+" ");
+            resultString.append(s + " ");
             return;
         }
         return;

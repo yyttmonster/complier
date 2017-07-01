@@ -6,8 +6,8 @@ package complier.process.lexer.preprocess;
 public class Preprocess {
 
     public String[] handle (String input){
-        String[] result = input.split("\\s+");
-        return result;
+        if (input.charAt(0) == '\\' && input.charAt(1)=='\\') return null;
+        return input.split("\\s+");
     }
 
 }
