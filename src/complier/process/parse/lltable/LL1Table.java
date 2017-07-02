@@ -16,36 +16,47 @@ public class LL1Table {
     private HashMap<String, HashSet<String>> followSet = new HashMap<>();
     private String[][] productionSet;
 
+    /**
+     * print table
+     */
     public void printTable(){
         for (ElementName elementName:table.keySet()){
             System.out.println(elementName.getNonterminals()+" "+elementName.getTerminal()+": "+table.get(elementName));
         }
     }
 
+    /**
+     * constructor
+     */
     public LL1Table() {
         firstSet = productionSets.getFirstSet();
         followSet = productionSets.getFollowSet();
         productionSet = productionSets.getProductionSet();
-        builTable();
+        buildTable();
+//        System.out.println(productionSets.getCurrentNumber());
     }
 
-    public void builTable() {
+    /**
+     * build LL(1) Table
+     */
+    public void buildTable() {
         for (int currentProductionNumber = 0; currentProductionNumber < productionSets.getCurrentNumber(); currentProductionNumber++) {
             HashSet<String> rightPartFirstSet = new HashSet<>();
+            // compute the firstSet of right part of production
             if (productionSet[currentProductionNumber][1].equals("nought")) {
                 rightPartFirstSet.add("nought");
-                continue;
-            }
-            // compute the firstSet of right part of production
-            for (int characterNumber = 1;
-                 characterNumber < productionSets.getMAXWIDTH() && productionSet[currentProductionNumber][characterNumber] != null;
-                 characterNumber++) {
-                if (productionSets.getNonterminals().contains(productionSet[currentProductionNumber][characterNumber])){
-                    rightPartFirstSet.addAll(firstSet.get(productionSet[currentProductionNumber][characterNumber]));
-                    if (firstSet.get(productionSet[currentProductionNumber][characterNumber]).contains("nought")) continue;
+            }else {
+                for (int characterNumber = 1;
+                     characterNumber < productionSets.getMAXWIDTH() && productionSet[currentProductionNumber][characterNumber] != null;
+                     characterNumber++) {
+                    if (productionSets.getNonterminals().contains(productionSet[currentProductionNumber][characterNumber])){
+                        rightPartFirstSet.addAll(firstSet.get(productionSet[currentProductionNumber][characterNumber]));
+                        if (firstSet.get(productionSet[currentProductionNumber][characterNumber]).contains("nought")) continue;
+                    }
+                    else rightPartFirstSet.add(productionSet[currentProductionNumber][characterNumber]);break;
                 }
-                else rightPartFirstSet.add(productionSet[currentProductionNumber][characterNumber]);
             }
+
 
             //build LL(1)table
             if (rightPartFirstSet.contains("nought")) {
@@ -68,6 +79,11 @@ public class LL1Table {
 //        table.put(elementName, productionNumber);
 //    }
 
+    /**
+     * search LL(1)Table
+     * @param elementName the identity of a element of table consisting of a nonterminals and a terminal
+     * @return the number of production (Integer)
+     */
     public int searchTable(ElementName elementName) {
         int productionNumber;
         try {
