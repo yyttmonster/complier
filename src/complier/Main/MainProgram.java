@@ -17,12 +17,11 @@ public class MainProgram {
 //            e.printStackTrace();
 //        }
 
-
-//        ProductionSets productionSets = new ProductionSets();
+        ProductionSets productionSets = new ProductionSets();
 //        System.out.println(productionSets.getCurrentNumber());
 //        productionSet.setProductionSet();
 
-        LL1Table ll1Table = new LL1Table();
-        ll1Table.printTable();
+//        LL1Table ll1Table = new LL1Table();
+//        ll1Table.printTable();
     }
 }

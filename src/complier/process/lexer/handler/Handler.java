@@ -5,6 +5,8 @@ import complier.process.error.IllegalCharException;
 import complier.process.lexer.preprocess.Preprocess;
 import complier.process.lexer.symbol.*;
 
+import java.util.ArrayList;
+
 
 /**
  * @author 余
@@ -16,7 +18,7 @@ public class Handler {
     private int code;
     private int value;
     private String strToken = "";
-    StringBuffer resultString = new StringBuffer();
+    ArrayList<SymbolForParser> resultString = new ArrayList<>();
     SymbolTable table = new SymbolTable();
     private SymbolCollection symbolCollection = new SymbolCollection();
 
@@ -26,7 +28,7 @@ public class Handler {
      * @param stringLine a line of string
      * @throws IllegalCharException
      */
-    public StringBuffer deal(String stringLine) throws IllegalCharException {
+    public ArrayList<SymbolForParser> deal(String stringLine) throws IllegalCharException {
         Preprocess preprocess = new Preprocess();
         String[] afterPreprocess = preprocess.handle(stringLine);
         if (afterPreprocess == null) return null;
@@ -67,7 +69,8 @@ public class Handler {
                 if (isLetter(ch)) throw new IllegalCharException("非法字符！");
                 //存入表
                 System.out.println(strToken);
-                translate(strToken, 0);
+                if (isdecimals) resultString.add(new SymbolForParser("i",Double.valueOf(strToken)));
+                else resultString.add(new SymbolForParser("i",Integer.valueOf(strToken)));
                 determineStrToken(i, str);
                 return;
             }
@@ -82,19 +85,20 @@ public class Handler {
                     continue;
                 }
                 code = symbolCollection.getSymbolType(strToken);
-                if (code > 0) translate(strToken, 2);
-                else translate(strToken, 1);
+                if (code > 0) resultString.add(new SymbolForParser("id",strToken));
+                else resultString.add(new SymbolForParser("id",strToken));
                 System.out.println(strToken+":"+code);//填入表
                 determineStrToken(i, str);
                 return;
             }
             if (strToken.equals("_")) throw new IllegalCharException("非法字符!");
             code = symbolCollection.getSymbolType(strToken);
-            if (code > 0) translate(strToken, 2);
-            else translate(strToken, 1);
+            if (code > 0) resultString.add(new SymbolForParser("id",strToken));
+            else resultString.add(new SymbolForParser("id",strToken));
             System.out.println(strToken+":"+code);//填入表
             return;
         }
+
 //        try {
 //            code = hashMap.get(ch + "");
 //        } catch (NullPointerException e) {
@@ -111,13 +115,12 @@ public class Handler {
                     code = i;
                     position++;
                     contact(str.charAt(position));
-
                 }
             } catch (NullPointerException e) {
                 //do nothing because it only represents that this operator has only one char
             }
         }
-        translate(strToken, 2);
+        resultString.add(new SymbolForParser("id",strToken));
         System.out.println(strToken + ":" + code);//填表
         if (position + 1 < str.length()) determineStrToken(position + 1, str);
         return;
@@ -167,29 +170,6 @@ public class Handler {
         if (ch > 47 && ch < 58) return true;
         return false;
     }
-
-    /**
-     * translate string input into a sentence that can be checked by parse program
-     *
-     * @param s    a string that could be contact to result
-     * @param type identity the type of s , 0 -> digit ,1 -> variables, 2 keyword
-     */
-    public void translate(String s, int type) {
-        if (type == 0) {
-            resultString.append("id ");
-            return;
-        }
-        if (type == 1) {
-            resultString.append("E ");
-            return;
-        }
-        if (type == 2) {
-            resultString.append(s + " ");
-            return;
-        }
-        return;
-    }
-
 
 //    public void
 

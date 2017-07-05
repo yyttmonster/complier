@@ -11,4 +11,5 @@ public class SymbolInfo {
         INT, REAL, BOOLEAN, CHAR, ARRAY, ARRAY_REF, FUNCTION, VOID
 //      public static Type from
     }
+
 }

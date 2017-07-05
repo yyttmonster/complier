@@ -1,5 +1,7 @@
 package complier.process.parse.production;
 
+import complier.process.semantics.Action;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,19 +14,82 @@ import java.util.Set;
  */
 public class ProductionSets {
 
-    /**
+    /** function
+     * Begin -> int i ( arglist ) { Body } \
+     * Begin -> boolean i ( arglist ) { Body } \
+     * Begin -> char i ( arglist ) { Body } \
+     * Begin -> real i ( arglist ) { Body } \
+     *
+     * Body -> D \
+     * Body -> A \
+     *
+     *
      * * declaration
-     * D -> int namelist|real namelist|char namelist|boolean namelist
-     * (namelist -> namelist , variable|variable)
-     * namelist -> variable namelist'
-     * namelist' -> , variable | nought
+     *
+     * D -> int namelist ;\
+     * D -> real namelist ;\
+     * D -> boolean namelist ;\
+     * D -> char namelist ;\         (namelist -> namelist ,B | B)
+     * namelist -> B namelist' \
+     * namelist' -> ,B namelist' \
+     * nameliist' -> nought \
+     * B -> i B' \
+     * B' -> ;= E \
+     * B' -> nought \
+     *
+     * * assignment
+     * A -> i := E ; \
+     *
+     * * compute
+     *                                 E -> E + E | E * E | E - E | - E | ( E ) | i
+     * E -> - E E' \
+     * E -> ( E ) E'
+     * E -> i E' \
+     * E' -> + E E' \
+     * E' -> * E E' \
+     * E' -> - E E' \
+     * E' -> nought \
+     *
+     * * array
+     * Array -> V := E \
+     * E -> V \
+     * V -> elist ] \
+     * V -> i \                       elist -> elist , E | i [ E
+     * elist -> i [ E elist' \
+     * elist' -> , E elist' \
+     *
+     * * condition
+     * C -> if ( EB ) then \
+     * S -> C S \
+     * TP -> C S else \
+     * S -> TP S \
+     * W -> while \
+     * WD -> W EB do \
+     * S -> WD S \
+     * L -> S \
+     * LS -> S \
+     * L -> LS S \
+     * S -> begin L end
+     * S -> A
+     *
+     * * Boolean Expression
+     *                              EB -> EB && EB | EB || EB | ! EB | ( EB )| E > E | E >= E | E < E | E <= E | E = E | E != E
+     *                              EB -> EB && EB | EB || EB | ( EB ) | E E1     E1 -> > E | >= E | < E | <= E | = E | != E
+     * EB -> E E1 EB' \
+     * EB -> ! EB EB' \
+     * EB -> ( EB ) EB' \
+     * EB' -> && EB EB' \
+     * EB' -> || EB \
+     *
      */
+    int i;
 
     private Set<String> nonterminals = new HashSet<>();
-    private final int productionNumber = 10;
+    private final int productionNumber = 20;
     private final int MAXWIDTH = 10;
     private int currentNumber = 0;
     private String[][] productionSet = new String[productionNumber][MAXWIDTH];
+    private Action semanticAction = new Action();
     private HashMap<String, HashSet<String>> firstSet = new HashMap<>();
     private HashMap<String, HashSet<String>> followSet = new HashMap<>();
 
@@ -39,21 +104,28 @@ public class ProductionSets {
      */
     public void setProductionSet() {
         addAproduction("" +
-//                "D -> int namelist ;" +
-//                "D -> real namelist ;" +
-//                "D -> char namelist ;" +
-//                "D -> boolean namelist ;" +
-//                "namelist -> variable namelist namelist' ;" +
-//                "namelist' -> , variable ;" +
-//                "namelist' -> nought;" +
-                "E -> T E' ;" +
-                "E' -> + T E' ;" +
-                "E' -> nought ;" +
-                "T -> F T' ;" +
-                "T' -> * F T' ;" +
-                "T' -> nought ;" +
-                "F -> ( E ) ;" +
-                "F -> i ");
+                "Begin -> int i ( arglist ) { Body } \\" +
+                "Begin -> boolean i ( arglist ) { Body } \\" +
+                "Begin -> char i ( arglist ) { Body } \\" +
+                "Begin -> real i ( arglist ) { Body } \\" +
+//                "arglist -> i arglist' \\" +
+//                "arglist' -> , i \\" +
+//                "arglist' -> nought \\" +
+//                "Body -> D ; \\" +
+//                "D -> int namelist  \\" +
+//                "D -> real namelist  \\" +
+//                "D -> boolean namelist \\" +
+//                "D -> char namelist \\" +
+//                "D -> array item  i \\" +
+//                "item -> [ i ] item \\" +
+//                "item -> nought \\" +
+//                "namelist -> B namelist' \\" +
+//                "namelist' -> , B namelist' \\" +
+//                "namelist' -> nought \\" +
+//                "B -> i B' \\" +
+//                "B' -> ;= E \\" +
+//                "B' -> nought \\" +
+                "");
 //        for (int i = 0; i < currentNumber; i++) {
 //            System.out.println(productionSet[i][0] + "->" + productionSet[i][1] + " " + productionSet[i][2]);
 //        }
@@ -71,13 +143,13 @@ public class ProductionSets {
         setFollowSet();
         setFollowSet();
         setFollowSet();
-//        for (String string : nonterminals) {
-//            System.out.print(string + ":  ");
-//            for (String firstChar : followSet.get(string)) {
-//                System.out.print(firstChar + ",");
-//            }
-//            System.out.println();
-//        }
+        for (String string : nonterminals) {
+            System.out.print(string + ":  ");
+            for (String firstChar : firstSet.get(string)) {
+                System.out.print(firstChar + ",");
+            }
+            System.out.println();
+        }
     }
 
     /**
@@ -163,7 +235,7 @@ public class ProductionSets {
      * store production in a array
      */
     private void addAproduction(String parse) {
-        for (String production : parse.split(";")) {
+        for (String production : parse.split("\\\\")) {
             String[] strings = production.split("( -> )");
             int length = strings.length;
             if (length != 2) {
@@ -173,11 +245,14 @@ public class ProductionSets {
             nonterminals.add(strings[0]);
             productionSet[currentNumber][0] = strings[0];
             int i = 1;
+            int productionLength = 1;
             for (String string : strings[1].split("\\s+")) {
                 if (string.equals("")) continue;
                 productionSet[currentNumber][i] = string;
                 i++;
+                productionLength++;
             }
+            semanticAction.setProductionLength(currentNumber,productionLength);
             currentNumber++;
         }
     }
@@ -215,5 +290,9 @@ public class ProductionSets {
 
     public HashMap<String, HashSet<String>> getFollowSet() {
         return followSet;
+    }
+
+    public Action getSemanticAction() {
+        return semanticAction;
     }
 }
