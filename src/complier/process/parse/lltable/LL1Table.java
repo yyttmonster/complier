@@ -12,8 +12,10 @@ public class LL1Table {
 
     /**
      * storing element of table
+     * the Key is consist of ElementName.toString()
+     * the value is the number of productions
      */
-    private HashMap<ElementName, Integer> table = new HashMap<>();
+    private HashMap<String, Integer> table = new HashMap<>();
 
     private ProductionSets productionSets = new ProductionSets();
     private HashMap<String, HashSet<String>> firstSet = new HashMap<>();
@@ -24,8 +26,8 @@ public class LL1Table {
      * print table
      */
     public void printTable() {
-        for (ElementName elementName : table.keySet()) {
-            System.out.println(elementName.getNonterminals() + " " + elementName.getTerminal() + ": " + table.get(elementName));
+        for (String elementName : table.keySet()) {
+            System.out.println(elementName  + ": " + table.get(elementName));
         }
     }
 
@@ -38,6 +40,7 @@ public class LL1Table {
         productionSet = productionSets.getProductionSet();
         buildTable();
 //        System.out.println(productionSets.getCurrentNumber());
+        printTable();
     }
 
     /**
@@ -64,17 +67,17 @@ public class LL1Table {
             //build LL(1)table
             if (rightPartFirstSet.contains("nought")) {
                 for (String terminalLeft : followSet.get(productionSet[currentProductionNumber][0])) {
-                    table.put(new ElementName(productionSet[currentProductionNumber][0], terminalLeft), currentProductionNumber);
+                    table.put(new ElementName(productionSet[currentProductionNumber][0], terminalLeft).toString(), currentProductionNumber);
                 }
             }
             for (String terminalRight : rightPartFirstSet) {
                 if (terminalRight.equals("nought")) continue;
-                table.put(new ElementName(productionSet[currentProductionNumber][0], terminalRight), currentProductionNumber);
+                table.put(new ElementName(productionSet[currentProductionNumber][0], terminalRight).toString(), currentProductionNumber);
             }
         }
     }
 
-    public HashMap<ElementName, Integer> getTable() {
+    public HashMap<String, Integer> getTable() {
         return table;
     }
 
@@ -91,23 +94,16 @@ public class LL1Table {
     public int searchTable(ElementName elementName) {
         int productionNumber;
         try {
-            productionNumber = table.get(elementName);
+            productionNumber = table.get(elementName.toString());
+            System.out.println("递推式："+productionNumber);
         } catch (Exception e) {
             productionNumber = -100;
         }
         return productionNumber;
     }
 
-    public void setTable(HashMap<ElementName, Integer> table) {
-        this.table = table;
-    }
-
     public String[][] getProductionSet() {
         return productionSet;
-    }
-
-    public void setProductionSet(String[][] productionSet) {
-        this.productionSet = productionSet;
     }
 
     public ProductionSets getProductionSets() {

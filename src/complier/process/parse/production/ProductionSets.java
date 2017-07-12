@@ -15,21 +15,26 @@ import java.util.Set;
 public class ProductionSets {
 
     /** function
-     * Begin -> int i ( arglist ) { Body } \
-     * Begin -> boolean i ( arglist ) { Body } \
-     * Begin -> char i ( arglist ) { Body } \
-     * Begin -> real i ( arglist ) { Body } \
-     *
-     * Body -> D \
-     * Body -> A \
-     *
+     * Function -> type i ( arglist ) { Body } \
+     * Function -> void i ( arglist ) { Body } \
+     * type -> int  \
+     * type -> boolean \
+     * type -> char \
+     * type -> real \
+     *                                       // arglist -> arglist , type i | type i
+     * arglist -> nought \
+     * arglist -> type i arglist' \
+     * arglist' -> , type i arglist' \
+     * arglist -> nought \
+     * Body -> Declaration ; \
+     * Body -> Assignment ; \
+     * Body -> Block \
+     * Body -> Call \
      *
      * * declaration
      *
-     * D -> int namelist ;\
-     * D -> real namelist ;\
-     * D -> boolean namelist ;\
-     * D -> char namelist ;\         (namelist -> namelist ,B | B)
+     *                                      //(namelist -> namelist ,B | B)
+     * Declaration -> type namelist \
      * namelist -> B namelist' \
      * namelist' -> ,B namelist' \
      * nameliist' -> nought \
@@ -37,8 +42,8 @@ public class ProductionSets {
      * B' -> ;= E \
      * B' -> nought \
      *
-     * * assignment
-     * A -> i := E ; \
+     * * Assignment
+     * Assignment -> i := E ; \
      *
      * * compute
      *                                 E -> E + E | E * E | E - E | - E | ( E ) | i
@@ -82,14 +87,15 @@ public class ProductionSets {
      * EB' -> || EB \
      *
      */
-    int i;
+
 
     private Set<String> nonterminals = new HashSet<>();
-    private final int productionNumber = 20;
+    private final int productionNumber = 100;
     private final int MAXWIDTH = 10;
     private int currentNumber = 0;
+    private int[] productionLengths = new int[productionNumber];
     private String[][] productionSet = new String[productionNumber][MAXWIDTH];
-    private Action semanticAction = new Action();
+    private Action semanticAction = new Action(productionSet,productionLengths);
     private HashMap<String, HashSet<String>> firstSet = new HashMap<>();
     private HashMap<String, HashSet<String>> followSet = new HashMap<>();
 
@@ -104,10 +110,51 @@ public class ProductionSets {
      */
     public void setProductionSet() {
         addAproduction("" +
-                "Begin -> int i ( arglist ) { Body } \\" +
-                "Begin -> boolean i ( arglist ) { Body } \\" +
-                "Begin -> char i ( arglist ) { Body } \\" +
-                "Begin -> real i ( arglist ) { Body } \\" +
+//                "1" +
+                "FunctionList -> Function  FunctionList \\" +
+                "FunctionList -> nought \\" +
+                "Function -> type i ( arglist ) { Body } \\" +
+                "Function -> void i ( arglist ) { Body } \\" +
+                "type -> int  \\" +
+//                "5" +
+                "type -> boolean \\" +
+                "type -> char \\" +
+                "type -> real \\" +
+                "" +
+                "arglist -> nought \\" +
+                "arglist -> type i arglist' \\" +
+//                "10" +
+                "arglist' -> , type i \\" +
+                "arglist' -> nought  \\" +
+                "" +
+                "Body -> Declaration ; \\" +
+                "Body -> Assignment ; \\" +
+                "Body -> Block \\" +
+                "Body -> nought \\" +
+//                "15" +
+                "Body -> Call \\" +
+                "" +
+                "Declaration -> type namelist \\" +
+                "namelist -> B namelist' \\" +
+                "namelist' -> , B namelist' \\" +
+                "nameliist' -> nought \\" +
+//                "20" +
+                "B -> i B' \\" +
+                "B' -> ;= E \\" +
+                "B' -> nought \\" +
+                "" +
+                "Assignment -> i := E ; \\" +
+                "" +
+                "E -> - E E' \\" +
+//                "25" +
+                "E -> ( E ) E' \\" +
+                "E -> i E' \\" +
+                "E' -> + E E' \\" +
+                "E' -> * E E' \\" +
+                "E' -> - E E' \\" +
+//                "30" +
+//                "E' -> nought \\" +
+                "" +
 //                "arglist -> i arglist' \\" +
 //                "arglist' -> , i \\" +
 //                "arglist' -> nought \\" +
@@ -239,11 +286,11 @@ public class ProductionSets {
             String[] strings = production.split("( -> )");
             int length = strings.length;
             if (length != 2) {
-                System.err.println("文法产生式:" + production + "定义错误!");
-                return;
+//                System.err.println("文法产生式:" + production + "定义错误!");
+                continue;
             }
             nonterminals.add(strings[0]);
-            productionSet[currentNumber][0] = strings[0];
+            productionSet[currentNumber][0] = strings[0].replaceAll(" ","");
             int i = 1;
             int productionLength = 1;
             for (String string : strings[1].split("\\s+")) {
@@ -251,6 +298,7 @@ public class ProductionSets {
                 productionSet[currentNumber][i] = string;
                 i++;
                 productionLength++;
+                productionLengths[currentNumber] =productionLength;
             }
             semanticAction.setProductionLength(currentNumber,productionLength);
             currentNumber++;

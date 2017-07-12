@@ -8,6 +8,8 @@ import java.util.HashMap;
  */
 public class ConstantImp implements SymbolInterface {
 
+    private static final int VARIABLES =1 ;
+
     private static final int INT = 2;
 
     private static final int REAL = 3;
@@ -18,15 +20,11 @@ public class ConstantImp implements SymbolInterface {
 
     @Override
     public void getMap(HashMap<String, Integer> hashMap) {
+        hashMap.put("variables",VARIABLES);
         hashMap.put("int", INT);
         hashMap.put("real", REAL);
         hashMap.put("char", CHAR);
         hashMap.put("boolean", BOOLEAN);
     }
-
-    public void printTeast(){
-        System.out.print("haha");
-    }
-
 
 }

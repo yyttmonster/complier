@@ -41,4 +41,9 @@ public class ElementName {
     public void setTerminal(String terminal) {
         this.terminal = terminal;
     }
+
+    @Override
+    public String toString() {
+        return nonterminals+"|"+terminal;
+    }
 }

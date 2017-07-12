@@ -3,33 +3,15 @@ package complier.process.lexer.handler;
 /**
  * @author 余
  */
-public class SymbolForParser {
+public abstract class SymbolForParser {
     private String nickname = "";
     private int tag ;
-//    /**
-//     * 2-int;
-//     * 3-real;
-//     * 4-char;
-//     * 5-boolean;
-//     */
-//    private int type = 0;
-    private int valueInt = -100;
-    private Double valueDouble = -100.0;
-    private String string = "";
+    private String name = "";
 
-    public SymbolForParser(String nickname, String string) {
+    public SymbolForParser(String nickname, int tag, String name) {
         this.nickname = nickname;
-        this.string = string;
-    }
-
-    public SymbolForParser(String nickname, int valueInt) {
-        this.nickname = nickname;
-        this.valueInt = valueInt;
-    }
-
-    public SymbolForParser(String nickname, Double valueDouble) {
-        this.nickname = nickname;
-        this.valueDouble = valueDouble;
+        this.tag = tag;
+        this.name = name;
     }
 
     public String getNickname() {
@@ -40,27 +22,19 @@ public class SymbolForParser {
         this.nickname = nickname;
     }
 
-    public int getValueInt() {
-        return valueInt;
+    public int getTag() {
+        return tag;
     }
 
-    public void setValueInt(int valueInt) {
-        this.valueInt = valueInt;
+    public void setTag(int tag) {
+        this.tag = tag;
     }
 
-    public Double getValueDouble() {
-        return valueDouble;
+    public String getName() {
+        return name;
     }
 
-    public void setValueDouble(Double valueDouble) {
-        this.valueDouble = valueDouble;
-    }
-
-    public String getString() {
-        return string;
-    }
-
-    public void setString(String string) {
-        this.string = string;
+    public void setName(String name) {
+        this.name = name;
     }
 }

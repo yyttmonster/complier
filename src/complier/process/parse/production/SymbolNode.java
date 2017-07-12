@@ -3,11 +3,18 @@ package complier.process.parse.production;
 /**
  * @author 余
  */
-public class Symbol {
 
-    private String symbolName ;
+public class SymbolNode {
 
-    private String type ;
+    public String symbolName ;
+
+    public String type ;
+
+    public String value;
+
+    public SymbolNode brotherNode;
+
+    public SymbolNode chilrenNode = null;
 
 //    private
 
@@ -19,17 +26,9 @@ public class Symbol {
         this.symbolName = symbolName;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Symbol(String symbolName, String type) {
-
+    public SymbolNode(String symbolName, String type,SymbolNode brotherNode) {
         this.symbolName = symbolName;
         this.type = type;
+        this.brotherNode = brotherNode;
     }
 }

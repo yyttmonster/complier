@@ -18,14 +18,15 @@ public class Handler {
     private int code;
     private int value;
     private String strToken = "";
-    ArrayList<SymbolForParser> resultString = new ArrayList<>();
-    SymbolTable table = new SymbolTable();
+    private ArrayList<SymbolForParser> resultString = new ArrayList<>();
+    private SymbolTable table = new SymbolTable();
     private SymbolCollection symbolCollection = new SymbolCollection();
 
     /**
      * divide a line of string to symbols
      *
      * @param stringLine a line of string
+     * @return ArrayList
      * @throws IllegalCharException
      */
     public ArrayList<SymbolForParser> deal(String stringLine) throws IllegalCharException {
@@ -35,7 +36,6 @@ public class Handler {
         for (String currentString : afterPreprocess) {
             determineStrToken(0, currentString);
         }
-        System.out.println(resultString);
         return resultString;
     }
 
@@ -69,8 +69,8 @@ public class Handler {
                 if (isLetter(ch)) throw new IllegalCharException("非法字符！");
                 //存入表
                 System.out.println(strToken);
-                if (isdecimals) resultString.add(new SymbolForParser("i",Double.valueOf(strToken)));
-                else resultString.add(new SymbolForParser("i",Integer.valueOf(strToken)));
+                if (isdecimals) resultString.add(new SymbolReal("id",symbolCollection.getSymbolType("int"),strToken,Double.valueOf(strToken)));
+                else resultString.add(new SymbolInt("id",symbolCollection.getSymbolType("real"),strToken,Integer.valueOf(strToken)));
                 determineStrToken(i, str);
                 return;
             }
@@ -85,16 +85,29 @@ public class Handler {
                     continue;
                 }
                 code = symbolCollection.getSymbolType(strToken);
-                if (code > 0) resultString.add(new SymbolForParser("id",strToken));
-                else resultString.add(new SymbolForParser("id",strToken));
+
+                if (code > 0){
+                    if (code == symbolCollection.getSymbolType("true")) resultString.add(new SymbolBool("id",code,strToken,true));
+                    else if (code== symbolCollection.getSymbolType("false")) resultString.add(new SymbolBool("id",code,strToken,false));
+                    else resultString.add(new SymbolVariables(strToken,code,strToken));
+                }
+                else resultString.add(new SymbolVariables("i",symbolCollection.getSymbolType("variables"),strToken));
                 System.out.println(strToken+":"+code);//填入表
                 determineStrToken(i, str);
                 return;
             }
             if (strToken.equals("_")) throw new IllegalCharException("非法字符!");
             code = symbolCollection.getSymbolType(strToken);
-            if (code > 0) resultString.add(new SymbolForParser("id",strToken));
-            else resultString.add(new SymbolForParser("id",strToken));
+
+//            if (code > 0) resultString.add(new SymbolForParser("id",strToken));
+//            else resultString.add(new SymbolForParser("id",strToken));
+            if (code > 0){
+                if (code == symbolCollection.getSymbolType("true")) resultString.add(new SymbolBool("id",code,strToken,true));
+                else if (code== symbolCollection.getSymbolType("false")) resultString.add(new SymbolBool("id",code,strToken,false));
+                else resultString.add(new SymbolVariables(strToken,code,strToken));
+            }
+            else resultString.add(new SymbolVariables("i",symbolCollection.getSymbolType("variables"),strToken));
+
             System.out.println(strToken+":"+code);//填入表
             return;
         }
@@ -120,7 +133,7 @@ public class Handler {
                 //do nothing because it only represents that this operator has only one char
             }
         }
-        resultString.add(new SymbolForParser("id",strToken));
+        resultString.add(new SymbolVariables(strToken,code,strToken));
         System.out.println(strToken + ":" + code);//填表
         if (position + 1 < str.length()) determineStrToken(position + 1, str);
         return;
