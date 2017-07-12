@@ -30,17 +30,21 @@ public class MainProgram {
 //        LL1Table ll1Table = new LL1Table();
 //        ll1Table.printTable();
 
-        Handler handler = new Handler();
-        try {
-            Analyse analyse = new Analyse(handler.deal("int main () {}"));
+//        Handler handler = new Handler();
+//        try {
+//            Analyse analyse = new Analyse(handler.deal("int main () {}"));
+//
+//            System.out.println("");
+//            analyse.analysing();
+//        } catch (IllegalCharException e) {
+//            e.printStackTrace();
+//        }
 
-            System.out.println("");
-            analyse.analysing();
-        } catch (IllegalCharException e) {
-            e.printStackTrace();
-        }
-
-
+String a= "h";
+String b = "hehe";
+b = a;
+a.replaceAll(" ","hahah");
+System.out.println(b);
 
     }
 }

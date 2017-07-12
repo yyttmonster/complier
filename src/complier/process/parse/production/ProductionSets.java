@@ -110,6 +110,7 @@ public class ProductionSets {
      */
     public void setProductionSet() {
         addAproduction("" +
+                "" +
 //                "1" +
                 "FunctionList -> Function  FunctionList \\" +
                 "FunctionList -> nought \\" +
@@ -130,30 +131,30 @@ public class ProductionSets {
                 "Body -> Declaration ; \\" +
                 "Body -> Assignment ; \\" +
                 "Body -> Block \\" +
-                "Body -> nought \\" +
 //                "15" +
-                "Body -> Call \\" +
+                "Body -> nought \\" +
+                "Body -> call \\" +
                 "" +
                 "Declaration -> type namelist \\" +
                 "namelist -> B namelist' \\" +
                 "namelist' -> , B namelist' \\" +
-                "nameliist' -> nought \\" +
 //                "20" +
+                "nameliist' -> nought \\" +
                 "B -> i B' \\" +
                 "B' -> ;= E \\" +
                 "B' -> nought \\" +
                 "" +
                 "Assignment -> i := E ; \\" +
-                "" +
-                "E -> - E E' \\" +
 //                "25" +
+                "E -> - E E' \\" +
                 "E -> ( E ) E' \\" +
                 "E -> i E' \\" +
-                "E' -> + E E' \\" +
-                "E' -> * E E' \\" +
-                "E' -> - E E' \\" +
+                "E' -> opr E E' \\" +
+                "opr -> + \\" +
 //                "30" +
-//                "E' -> nought \\" +
+                "opr -> - \\" +
+                "opr -> * \\" +
+                "E' -> nought \\" +
                 "" +
 //                "arglist -> i arglist' \\" +
 //                "arglist' -> , i \\" +

@@ -8,7 +8,7 @@ public class SymbolNode {
 
     public String symbolName ;
 
-    public String type ;
+    public int type ;
 
     public String value;
 
@@ -28,7 +28,27 @@ public class SymbolNode {
 
     public SymbolNode(String symbolName, String type,SymbolNode brotherNode) {
         this.symbolName = symbolName;
-        this.type = type;
+        switch (type) {
+            case "":{
+                this.type = -1;break;
+            }
+            case "void":{
+                this.type = 0;break;
+            }
+            case "int":{
+                this.type = 2;break;
+            }
+            case "real":{
+                this.type = 3;break;
+            }
+            case "char":{
+                this.type = 4;break;
+            }
+            case "boolean":{
+                this.type = 5;break;
+            }
+            default:this.type = -1;
+        }
         this.brotherNode = brotherNode;
     }
 }
