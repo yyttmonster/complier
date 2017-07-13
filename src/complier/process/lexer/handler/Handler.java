@@ -118,7 +118,7 @@ public class Handler {
 //            throw new IllegalCharException("非法字符!");
 
         code = symbolCollection.getSymbolType(ch + "");
-        if (code < 0) throw new IllegalCharException("非法字符!");
+//        if (code < 0) throw new IllegalCharException("非法字符!");
 
         contact(ch);
         if (position + 1 < str.length()) {
