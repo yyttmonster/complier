@@ -51,4 +51,9 @@ public class SymbolNode {
         }
         this.brotherNode = brotherNode;
     }
+
+    @Override
+    public String toString() {
+        return "";
+    }
 }
