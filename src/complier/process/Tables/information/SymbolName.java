@@ -1,4 +1,4 @@
-package complier.process.Tables;
+package complier.process.Tables.information;
 
 /**
  * @author 余
@@ -39,5 +39,10 @@ public class SymbolName {
 
     public void setProcessNumber(int processNumber) {
         this.processNumber = processNumber;
+    }
+
+    @Override
+    public String toString() {
+        return name+processNumber;
     }
 }

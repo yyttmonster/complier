@@ -1,6 +1,6 @@
 package complier.process.parse.production;
 
-import complier.process.semantics.Action;
+//import complier.process.semantics.Action;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,14 +14,15 @@ import java.util.Set;
  */
 public class ProductionSets {
 
-    /** function
+    /**
+     * function
      * Function -> type i ( arglist ) { Body } \
      * Function -> void i ( arglist ) { Body } \
      * type -> int  \
      * type -> boolean \
      * type -> char \
      * type -> real \
-     *                                       // arglist -> arglist , type i | type i
+     * // arglist -> arglist , type i | type i
      * arglist -> nought \
      * arglist -> type i arglist' \
      * arglist' -> , type i arglist' \
@@ -30,10 +31,10 @@ public class ProductionSets {
      * Body -> Assignment ; \
      * Body -> Block \
      * Body -> Call \
-     *
+     * <p>
      * * declaration
-     *
-     *                                      //(namelist -> namelist ,B | B)
+     * <p>
+     * //(namelist -> namelist ,B | B)
      * Declaration -> type namelist \
      * namelist -> B namelist' \
      * namelist' -> ,B namelist' \
@@ -41,12 +42,12 @@ public class ProductionSets {
      * B -> i B' \
      * B' -> ;= E \
      * B' -> nought \
-     *
+     * <p>
      * * Assignment
      * Assignment -> i := E ; \
-     *
+     * <p>
      * * compute
-     *                                 E -> E + E | E * E | E - E | - E | ( E ) | i
+     * E -> E + E | E * E | E - E | - E | ( E ) | i
      * E -> - E E' \
      * E -> ( E ) E'
      * E -> i E' \
@@ -54,7 +55,7 @@ public class ProductionSets {
      * E' -> * E E' \
      * E' -> - E E' \
      * E' -> nought \
-     *
+     * <p>
      * * array
      * Array -> V := E \
      * E -> V \
@@ -62,7 +63,7 @@ public class ProductionSets {
      * V -> i \                       elist -> elist , E | i [ E
      * elist -> i [ E elist' \
      * elist' -> , E elist' \
-     *
+     * <p>
      * * condition
      * C -> if ( EB ) then \
      * S -> C S \
@@ -76,16 +77,15 @@ public class ProductionSets {
      * L -> LS S \
      * S -> begin L end
      * S -> A
-     *
+     * <p>
      * * Boolean Expression
-     *                              EB -> EB && EB | EB || EB | ! EB | ( EB )| E > E | E >= E | E < E | E <= E | E = E | E != E
-     *                              EB -> EB && EB | EB || EB | ( EB ) | E E1     E1 -> > E | >= E | < E | <= E | = E | != E
+     * EB -> EB && EB | EB || EB | ! EB | ( EB )| E > E | E >= E | E < E | E <= E | E = E | E != E
+     * EB -> EB && EB | EB || EB | ( EB ) | E E1     E1 -> > E | >= E | < E | <= E | = E | != E
      * EB -> E E1 EB' \
      * EB -> ! EB EB' \
      * EB -> ( EB ) EB' \
      * EB' -> && EB EB' \
      * EB' -> || EB \
-     *
      */
 
 
@@ -95,7 +95,7 @@ public class ProductionSets {
     private int currentNumber = 0;
     private int[] productionLengths = new int[productionNumber];
     private String[][] productionSet = new String[productionNumber][MAXWIDTH];
-    private Action semanticAction = new Action(productionSet,productionLengths);
+    //    private Action semanticAction = new Action(productionSet, productionLengths);
     private HashMap<String, HashSet<String>> firstSet = new HashMap<>();
     private HashMap<String, HashSet<String>> followSet = new HashMap<>();
 
@@ -294,7 +294,7 @@ public class ProductionSets {
                 continue;
             }
             nonterminals.add(strings[0]);
-            productionSet[currentNumber][0] = strings[0].replaceAll(" ","");
+            productionSet[currentNumber][0] = strings[0].replaceAll(" ", "");
             int i = 1;
             int productionLength = 1;
             for (String string : strings[1].split("\\s+")) {
@@ -302,9 +302,9 @@ public class ProductionSets {
                 productionSet[currentNumber][i] = string;
                 i++;
                 productionLength++;
-                productionLengths[currentNumber] =productionLength;
+                productionLengths[currentNumber] = productionLength;
             }
-            semanticAction.setProductionLength(currentNumber,productionLength);
+//            semanticAction.setProductionLength(currentNumber, productionLength);
             currentNumber++;
         }
     }
@@ -344,7 +344,7 @@ public class ProductionSets {
         return followSet;
     }
 
-    public Action getSemanticAction() {
-        return semanticAction;
-    }
+//    public Action getSemanticAction() {
+//        return semanticAction;
+//    }
 }

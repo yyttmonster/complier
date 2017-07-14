@@ -6,54 +6,63 @@ package complier.process.parse.production;
 
 public class SymbolNode {
 
-    public String symbolName ;
+    private int productionNumber;
 
-    public int type ;
+    private String symbolName ;
 
-    public String value;
+    public String type ="";
 
-    public SymbolNode brotherNode;
+    public SymbolNode NextBrotherNode = null;
 
-    public SymbolNode chilrenNode = null;
+    public SymbolNode LastBrotherNode = null;
 
-//    private
+    public SymbolNode sonNode = null;
+
+    public SymbolNode fatherNode = null;
+
+    public int getProductionNumber() {
+        return productionNumber;
+    }
 
     public String getSymbolName() {
         return symbolName;
     }
 
-    public void setSymbolName(String symbolName) {
+    public SymbolNode(String symbolName, int productionNumber){
         this.symbolName = symbolName;
+        this.productionNumber = productionNumber;
     }
-
-    public SymbolNode(String symbolName, String type,SymbolNode brotherNode) {
-        this.symbolName = symbolName;
-        switch (type) {
-            case "":{
-                this.type = -1;break;
-            }
-            case "void":{
-                this.type = 0;break;
-            }
-            case "int":{
-                this.type = 2;break;
-            }
-            case "real":{
-                this.type = 3;break;
-            }
-            case "char":{
-                this.type = 4;break;
-            }
-            case "boolean":{
-                this.type = 5;break;
-            }
-            default:this.type = -1;
-        }
-        this.brotherNode = brotherNode;
-    }
-
     @Override
     public String toString() {
         return "";
     }
+
+
+
+//    public SymbolNode(String symbolName, String type,SymbolNode brotherNode) {
+//        this.symbolName = symbolName;
+//        switch (type) {
+//            case "":{
+//                this.type = -1;break;
+//            }
+//            case "void":{
+//                this.type = 0;break;
+//            }
+//            case "int":{
+//                this.type = 2;break;
+//            }
+//            case "real":{
+//                this.type = 3;break;
+//            }
+//            case "char":{
+//                this.type = 4;break;
+//            }
+//            case "boolean":{
+//                this.type = 5;break;
+//            }
+//            default:this.type = -1;
+//        }
+//        this.brotherNode = brotherNode;
+//    }
+
 }

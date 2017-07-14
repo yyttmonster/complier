@@ -3,10 +3,11 @@ package complier.process.lexer.handler;
 /**
  * @author 余
  */
-public class SymbolBool extends SymbolForParser{
+public class SymbolBoolean extends SymbolForParser{
+
     private boolean value;
 
-    public SymbolBool(String nickname, int tag, String name, boolean value) {
+    public SymbolBoolean(String nickname, int tag, String name, boolean value) {
         super(nickname, tag, name);
         this.value = value;
     }

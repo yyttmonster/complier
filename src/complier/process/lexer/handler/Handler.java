@@ -1,6 +1,6 @@
 package complier.process.lexer.handler;
 
-import complier.process.Tables.SymbolTable;
+import complier.process.Tables.table.SymbolTable;
 import complier.process.error.IllegalCharException;
 import complier.process.lexer.preprocess.Preprocess;
 import complier.process.lexer.symbol.*;
@@ -87,8 +87,8 @@ public class Handler {
                 code = symbolCollection.getSymbolType(strToken);
 
                 if (code > 0){
-                    if (code == symbolCollection.getSymbolType("true")) resultString.add(new SymbolBool("id",code,strToken,true));
-                    else if (code== symbolCollection.getSymbolType("false")) resultString.add(new SymbolBool("id",code,strToken,false));
+                    if (code == symbolCollection.getSymbolType("true")) resultString.add(new SymbolBoolean("id",code,strToken,true));
+                    else if (code== symbolCollection.getSymbolType("false")) resultString.add(new SymbolBoolean("id",code,strToken,false));
                     else resultString.add(new SymbolVariables(strToken,code,strToken));
                 }
                 else resultString.add(new SymbolVariables("i",symbolCollection.getSymbolType("variables"),strToken));
@@ -102,8 +102,8 @@ public class Handler {
 //            if (code > 0) resultString.add(new SymbolForParser("id",strToken));
 //            else resultString.add(new SymbolForParser("id",strToken));
             if (code > 0){
-                if (code == symbolCollection.getSymbolType("true")) resultString.add(new SymbolBool("id",code,strToken,true));
-                else if (code== symbolCollection.getSymbolType("false")) resultString.add(new SymbolBool("id",code,strToken,false));
+                if (code == symbolCollection.getSymbolType("true")) resultString.add(new SymbolBoolean("id",code,strToken,true));
+                else if (code== symbolCollection.getSymbolType("false")) resultString.add(new SymbolBoolean("id",code,strToken,false));
                 else resultString.add(new SymbolVariables(strToken,code,strToken));
             }
             else resultString.add(new SymbolVariables("i",symbolCollection.getSymbolType("variables"),strToken));
