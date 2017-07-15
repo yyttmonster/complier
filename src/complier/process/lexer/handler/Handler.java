@@ -74,6 +74,7 @@ public class Handler {
                 determineStrToken(i, str);
                 return;
             }
+            resultString.add(new SymbolInt("id",symbolCollection.getSymbolType("real"),strToken,Integer.valueOf(strToken)));
             return;
         }
         if (isLetter(ch) || ch == '_') {

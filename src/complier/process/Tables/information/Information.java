@@ -3,11 +3,11 @@ package complier.process.Tables.information;
 /**
  * @author 余
  */
-public class Infomation {
+public class Information {
 
     private String name= "";
 
-    private int type = 0;
+    private String type = "";
 
     public int processNumber = 0;
 
@@ -20,15 +20,19 @@ public class Infomation {
     private char valueChar = ' ';
 
 
-    public Infomation(String name, int type) {
+    public Information(String name, String type, int processNumber) {
         this.name = name;
         this.type = type;
+        this.processNumber = processNumber;
     }
 
-    public int getvalue () {
-        return 0;
+    public String getName() {
+        return name;
     }
 
+    public String getType() {
+        return type;
+    }
 
     private int typeFromString(String type) {
         switch (type) {

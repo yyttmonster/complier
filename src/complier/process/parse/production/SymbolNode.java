@@ -8,9 +8,11 @@ public class SymbolNode {
 
     private int productionNumber;
 
-    private String symbolName ;
+    private String variableName = "_";
 
-    public String type ="";
+    private String symbolName = "";
+
+    public String type = "";
 
     public SymbolNode NextBrotherNode = null;
 
@@ -28,15 +30,28 @@ public class SymbolNode {
         return symbolName;
     }
 
-    public SymbolNode(String symbolName, int productionNumber){
+    public void setSymbolName(String symbolName) {
+        this.symbolName = symbolName;
+    }
+
+    public String getVariableName() {
+        return variableName;
+    }
+
+    public void setVariableName(String variableName) {
+        this.variableName = variableName;
+    }
+
+    public SymbolNode(String symbolName, int productionNumber) {
         this.symbolName = symbolName;
         this.productionNumber = productionNumber;
     }
+
     @Override
     public String toString() {
+
         return "";
     }
-
 
 
 //    public SymbolNode(String symbolName, String type,SymbolNode brotherNode) {

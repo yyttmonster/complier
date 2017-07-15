@@ -46,7 +46,7 @@ public class LL1Table {
     /**
      * build LL(1) Table
      */
-    public void buildTable() {
+    private void buildTable() {
         for (int currentProductionNumber = 0; currentProductionNumber < productionSets.getCurrentNumber(); currentProductionNumber++) {
             HashSet<String> rightPartFirstSet = new HashSet<>();
             // compute the firstSet of right part of production
@@ -95,7 +95,7 @@ public class LL1Table {
         int productionNumber;
         try {
             productionNumber = table.get(elementName.toString());
-            System.out.println("递推式："+productionNumber);
+//            System.out.println("递推式："+productionNumber);
         } catch (Exception e) {
             productionNumber = -100;
         }

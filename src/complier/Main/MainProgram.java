@@ -27,10 +27,10 @@ public class MainProgram {
 
         Handler handler = new Handler();
         try {
-            Analyse analyse = new Analyse(handler.deal("int main () { int i,j ; }"));
-
+            Analyse analyse = new Analyse(handler.deal("int main () {int i := 1 + 2 ; }"));
             System.out.println("");
             analyse.analysing();
+            analyse.result();
         } catch (IllegalCharException e) {
             e.printStackTrace();
         }

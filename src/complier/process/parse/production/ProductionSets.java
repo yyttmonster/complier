@@ -125,7 +125,7 @@ public class ProductionSets {
                 "arglist -> nought \\" +
                 "arglist -> type i arglist' \\" +
 //                "10" +
-                "arglist' -> , type i \\" +
+                "arglist' -> , type i arglist' \\" +
                 "arglist' -> nought  \\" +
                 "" +
                 "Body -> Declaration ; \\" +
@@ -133,7 +133,7 @@ public class ProductionSets {
                 "Body -> Block \\" +
 //                "15" +
                 "Body -> nought \\" +
-                "Body -> call \\" +
+                "Body -> call i ( ) \\" +
                 "" +
                 "Declaration -> type namelist \\" +
                 "namelist -> B namelist' \\" +
@@ -141,21 +141,25 @@ public class ProductionSets {
 //                "20" +
                 "namelist' -> nought \\" +
                 "B -> i B' \\" +
-                "B' -> ;= E \\" +
+                "B' -> := E \\" +
                 "B' -> nought \\" +
                 "" +
                 "Assignment -> i := E ; \\" +
 //                "25" +
-                "E -> - E E' \\" +
-                "E -> ( E ) E' \\" +
-                "E -> i E' \\" +
-                "E' -> opr E E' \\" +
-                "opr -> + \\" +
-//                "30" +
-                "opr -> - \\" +
-                "opr -> * \\" +
+                "E -> T E' \\" +
+                "E' -> + T E' \\" +
+                "E' -> - T E' \\" +
                 "E' -> nought \\" +
-                "" +
+                "T -> F T' \\" +
+//                "30" +
+                "T' -> * F T' \\" +
+                "T' -> nought \\" +
+                "F -> - N \\" +
+                "F -> N \\" +
+                "N -> ( E ) \\" +
+//                "35" +
+                "N -> id \\" +
+                "N -> i \\" +
 //                "arglist -> i arglist' \\" +
 //                "arglist' -> , i \\" +
 //                "arglist' -> nought \\" +
@@ -186,8 +190,15 @@ public class ProductionSets {
         setFirstSet();
         setFirstSet();
         setFirstSet();
+        setFirstSet();
+        setFirstSet();
+        setFirstSet();
 
         initiateFollowSet();
+        setFollowSet();
+        setFollowSet();
+        setFollowSet();
+        setFollowSet();
         setFollowSet();
         setFollowSet();
         setFollowSet();
@@ -347,4 +358,5 @@ public class ProductionSets {
 //    public Action getSemanticAction() {
 //        return semanticAction;
 //    }
+
 }
