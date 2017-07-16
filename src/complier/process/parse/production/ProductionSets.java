@@ -114,8 +114,8 @@ public class ProductionSets {
 //                "1" +
                 "FunctionList -> Function  FunctionList \\" +
                 "FunctionList -> nought \\" +
-                "Function -> type i ( arglist ) { Body } \\" +
-                "Function -> void i ( arglist ) { Body } \\" +
+                "Function -> type i ( arglist ) { Blocklist } \\" +
+                "Function -> void i ( arglist ) { Blocklist } \\" +
                 "type -> int  \\" +
 //                "5" +
                 "type -> boolean \\" +
@@ -128,12 +128,12 @@ public class ProductionSets {
                 "arglist' -> , type i arglist' \\" +
                 "arglist' -> nought  \\" +
                 "" +
-                "Body -> Declaration ; \\" +
-                "Body -> Assignment ; \\" +
-                "Body -> Block \\" +
+                "Block -> Declaration ; \\" +
+                "Block -> Assignment ; \\" +
+                "Blocklist -> Block Blocklist  \\" +
 //                "15" +
-                "Body -> nought \\" +
-                "Body -> call i ( ) \\" +
+                "Blocklist -> nought \\" +
+                "Block -> call i (  ) \\" +
                 "" +
                 "Declaration -> type namelist \\" +
                 "namelist -> B namelist' \\" +
@@ -160,6 +160,8 @@ public class ProductionSets {
 //                "35" +
                 "N -> id \\" +
                 "N -> i \\" +
+                "" +
+                "" +
 //                "arglist -> i arglist' \\" +
 //                "arglist' -> , i \\" +
 //                "arglist' -> nought \\" +
@@ -191,13 +193,8 @@ public class ProductionSets {
         setFirstSet();
         setFirstSet();
         setFirstSet();
-        setFirstSet();
-        setFirstSet();
 
         initiateFollowSet();
-        setFollowSet();
-        setFollowSet();
-        setFollowSet();
         setFollowSet();
         setFollowSet();
         setFollowSet();

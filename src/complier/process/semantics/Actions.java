@@ -11,7 +11,13 @@ import complier.process.parse.production.SymbolNode;
  */
 public class Actions {
 
-    static int squenceNumber = 99;
+    static int squenceNumber = 100;
+
+    static int temVariable = 1;
+
+    String currentString = "_";
+
+    String haha = "_";
 
     private SymbolNode Root = new SymbolNode("FunctionList", 0);
 
@@ -56,7 +62,7 @@ public class Actions {
             case 2: {
                 break;
             }
-//            Function -> type i ( arglist ) { Body }
+//            Function -> type i ( arglist ) { Blocklist }
             case 3: {
                 switch (currentElement.getSymbolName()) {
                     case "type": {
@@ -69,7 +75,7 @@ public class Actions {
                         insertGlobalTable(currentNode);
                         break;
                     }
-                    case "Body": {
+                    case "Blocklist": {
                         setBrother(currentElement);
                         currentNode.type = currentNode.LastBrotherNode  // {
                                 .LastBrotherNode                        // )
@@ -149,6 +155,7 @@ public class Actions {
                     case "i": {
                         setBrother(currentElement);
                         currentNode.type = currentNode.LastBrotherNode.type;
+                        symbolTable.processNumber = 0;
                         inserSymbolTable(currentNode);
                         break;
                     }
@@ -187,7 +194,7 @@ public class Actions {
             case 12: {
                 break;
             }
-//            Body -> Declaration ;
+//            Block -> Declaration ;
             case 13: {
                 switch (currentElement.getSymbolName()) {
                     case ";": {
@@ -201,19 +208,19 @@ public class Actions {
                 }
                 break;
             }
-//            Body -> Assignment ;
+//            Block -> Assignment ;
             case 14: {
                 break;
             }
-//            Body -> Block
+//            Blocklist -> Block Blocklist
             case 15: {
                 break;
             }
-//            Body -> nought
+//            Blocklist -> nought
             case 16: {
                 break;
             }
-//            Body -> call
+//            Block -> call i (  )
             case 17: {
                 break;
             }
@@ -496,6 +503,10 @@ public class Actions {
                 else  currentNode.type = information.getType();
                 break;
             }
+
+            case 38 :{
+                break;
+            }
         }
 
     }
@@ -548,16 +559,54 @@ public class Actions {
         return functionInfo;
     }
 
-    public void ergodic (SymbolNode symbolNode1){
+    public String ergodic (SymbolNode symbolNode1){
 //        System.out.println("digui : "+symbolNode1.getSymbolName());
         if (symbolNode1.sonNode != null){
-            ergodic(symbolNode1.sonNode);
+            haha = ergodic(symbolNode1.sonNode);
         }
-        System.out.println(symbolNode1.getSymbolName());
-        if (symbolNode1.NextBrotherNode != null){
-            ergodic(symbolNode1.NextBrotherNode);
+        if (!symbolNode1.getVariableName().equals("")){
+            switch (symbolNode1.getVariableName()){
+                case "+":{return printResult("+","@",ergodic(symbolNode1.NextBrotherNode),newTemp());}
+                case "-":{return printResult("-","@",ergodic(symbolNode1.NextBrotherNode),newTemp());}
+                case "*":{return printResult("*","@",ergodic(symbolNode1.NextBrotherNode),newTemp());}
+                case ":=":{
+                    return printResult(":=",ergodic(symbolNode1.NextBrotherNode),"_","@");
+                }
+                default:{
+                    if (symbolNode1.getSymbolName().equals("id"))
+                        return symbolNode1.getVariableName();
+                    if (symbolNode1.NextBrotherNode != null){
+                        return ergodic(symbolNode1.NextBrotherNode);
+                    }
+                }
+            }
+//            System.out.println(symbolNode1.getSymbolName());
         }
-        return;
+        return haha;
+    }
+
+    public String newTemp (){
+        return "T"+temVariable++;
+    }
+
+    private String printResult(String opr,String first,String second,String result){
+        System.out.println(squenceNumber+++"  "+"(" +
+                opr +
+                ","+
+                first+
+                ","+
+                second +
+                ","+
+                result +
+                ")");
+        return result;
+    }
+
+    private String fatherOrBrother (SymbolNode symbolNode){
+       if (!symbolNode.LastBrotherNode.equals("")) return symbolNode.LastBrotherNode.getVariableName();
+       if (!symbolNode.fatherNode.equals("")) return symbolNode.fatherNode.getVariableName();
+//       else return symbolNode.fatherNode.
+        return null;
     }
 
 

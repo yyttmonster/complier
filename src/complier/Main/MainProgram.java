@@ -27,7 +27,7 @@ public class MainProgram {
 
         Handler handler = new Handler();
         try {
-            Analyse analyse = new Analyse(handler.deal("int main () {int i := 1 + 2 ; }"));
+            Analyse analyse = new Analyse(handler.deal("int main () {int i := -3+4*5+6*7; }"));
             System.out.println("");
             analyse.analysing();
             analyse.result();
