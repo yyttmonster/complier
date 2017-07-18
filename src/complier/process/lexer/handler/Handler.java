@@ -74,7 +74,8 @@ public class Handler {
                 determineStrToken(i, str);
                 return;
             }
-            resultString.add(new SymbolInt("id",symbolCollection.getSymbolType("real"),strToken,Integer.valueOf(strToken)));
+            resultString.add(new SymbolInt("id",symbolCollection.getSymbolType("int"),strToken,Integer.valueOf(strToken)));
+            System.out.println(strToken);
             return;
         }
         if (isLetter(ch) || ch == '_') {
@@ -136,8 +137,9 @@ public class Handler {
         }
         resultString.add(new SymbolVariables(strToken,code,strToken));
         System.out.println(strToken + ":" + code);//填表
-        if (position + 1 < str.length()) determineStrToken(position + 1, str);
-        return;
+        if (position + 1 < str.length())
+            determineStrToken(position + 1, str);
+
     }
 
     /**

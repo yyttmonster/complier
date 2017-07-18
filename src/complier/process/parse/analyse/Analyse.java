@@ -60,8 +60,10 @@ public class Analyse {
             if (peek.getSymbolName().equals(inputString.get(characterNuber).getNickname())) {
 //                if (peek.getSymbolName().equals("#")) return true;
                 if (symbolStack.size() == 0) return true;
-//                System.out.println(peek.getSymbolName());
+                System.out.println("peidui: "+peek.getSymbolName());
                 peek.setVariableName(inputString.get(characterNuber).getName());
+                if (peek.getSymbolName().equals("("))
+                    System.out.println(peek);
                 actions.buildTree(peek);
                 characterNuber++;
                 continue;

@@ -27,14 +27,13 @@ public class MainProgram {
 
         Handler handler = new Handler();
         try {
-            Analyse analyse = new Analyse(handler.deal("int main () {int i := -3+4*5+6*7; }"));
+            Analyse analyse = new Analyse(handler.deal("int main () { boolean i,j;i := 2 > 1; }" ));
             System.out.println("");
             analyse.analysing();
             analyse.result();
         } catch (IllegalCharException e) {
             e.printStackTrace();
         }
-
 
     }
 }

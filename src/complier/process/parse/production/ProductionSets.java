@@ -88,7 +88,6 @@ public class ProductionSets {
      * EB' -> || EB \
      */
 
-
     private Set<String> nonterminals = new HashSet<>();
     private final int productionNumber = 100;
     private final int MAXWIDTH = 10;
@@ -144,7 +143,7 @@ public class ProductionSets {
                 "B' -> := E \\" +
                 "B' -> nought \\" +
                 "" +
-                "Assignment -> i := E ; \\" +
+                "Assignment -> i := E  \\" +
 //                "25" +
                 "E -> T E' \\" +
                 "E' -> + T E' \\" +
@@ -160,25 +159,19 @@ public class ProductionSets {
 //                "35" +
                 "N -> id \\" +
                 "N -> i \\" +
+                "T' -> == F T' \\" +
+                "T' -> > F T' \\" +
+                "T' -> >= F T' \\" +
+                "40" +
+                "T' -> < F T' \\" +
+                "T' -> <= F T' \\" +
+                "T' -> != F T' \\" +
+                "E' -> && T E' \\" +
+                "E' -> || T E' \\" +
+//                "45" +
+                "E' -> ! T E' \\" +
                 "" +
                 "" +
-//                "arglist -> i arglist' \\" +
-//                "arglist' -> , i \\" +
-//                "arglist' -> nought \\" +
-//                "Body -> D ; \\" +
-//                "D -> int namelist  \\" +
-//                "D -> real namelist  \\" +
-//                "D -> boolean namelist \\" +
-//                "D -> char namelist \\" +
-//                "D -> array item  i \\" +
-//                "item -> [ i ] item \\" +
-//                "item -> nought \\" +
-//                "namelist -> B namelist' \\" +
-//                "namelist' -> , B namelist' \\" +
-//                "namelist' -> nought \\" +
-//                "B -> i B' \\" +
-//                "B' -> ;= E \\" +
-//                "B' -> nought \\" +
                 "");
 //        for (int i = 0; i < currentNumber; i++) {
 //            System.out.println(productionSet[i][0] + "->" + productionSet[i][1] + " " + productionSet[i][2]);
