@@ -101,5 +101,6 @@ public class Analyse {
 
     public void result (){
         actions.ergodic(actions.getRoot());
+        actions.printResult();
     }
 }

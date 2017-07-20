@@ -27,7 +27,17 @@ public class MainProgram {
 
         Handler handler = new Handler();
         try {
-            Analyse analyse = new Analyse(handler.deal("int main () { boolean i,j;i := 2 > 1; }" ));
+            Analyse analyse = new Analyse(handler.deal("int main () {" +
+                    " int i := 1+3*4; " +
+                    "int j;" +
+                    "int m,n,w,e; " +
+                    "j := 4*3; " +
+                    "if ( m > n && w<= e  ) then { " +
+                    "int k := 4; " +
+                    "while ( m != w) do { int ll := 88; } }" +
+                    " else { int p :=5 ;  }" +
+                    "" +
+                    "}" ));
             System.out.println("");
             analyse.analysing();
             analyse.result();

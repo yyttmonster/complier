@@ -6,6 +6,8 @@ import complier.process.Tables.table.GlobalTable;
 import complier.process.Tables.table.SymbolTable;
 import complier.process.parse.production.SymbolNode;
 
+import java.util.HashMap;
+
 /**
  * @author 余
  */
@@ -14,6 +16,10 @@ public class Actions {
     static int squenceNumber = 100;
 
     static int temVariable = 1;
+
+    private Four fourSet = new Four();
+
+    private HashMap<Integer,Integer> mergeMap = new HashMap<>();
 
     String haha = "_";
 
@@ -208,12 +214,12 @@ public class Actions {
             }
 //            Block -> Assignment ;
             case 14: {
-                switch (currentElement.getSymbolName()){
-                    case ";":{
+                switch (currentElement.getSymbolName()) {
+                    case ";": {
                         setBrother(currentElement);
                         break;
                     }
-                    default:{
+                    default: {
                         setFather(currentElement);
                     }
                 }
@@ -221,12 +227,12 @@ public class Actions {
             }
 //            Blocklist -> Block Blocklist
             case 15: {
-                switch (currentElement.getSymbolName()){
-                    case "Block":{
+                switch (currentElement.getSymbolName()) {
+                    case "Block": {
                         setFather(currentElement);
                         break;
                     }
-                    default:{
+                    default: {
                         setBrother(currentElement);
                         break;
                     }
@@ -513,14 +519,218 @@ public class Actions {
                 setFather(currentElement);
                 Information information = searchSymbolTable(currentElement);
                 currentNode.setSymbolName(information.getName());
-                if (information.getType().equals(currentNode.fatherNode.type)) {
+                if (!information.getType().equals(currentNode.fatherNode.type)) {
                     System.out.println("type error");
                     return;
                 } else currentNode.type = information.getType();
                 break;
             }
-
+//            Block -> if ( i S' S* ) { Blocklist } else'
             case 38: {
+                switch (currentElement.getSymbolName()) {
+                    case "if": {
+                        setFather(currentElement);
+                        break;
+                    }
+                    case "(": {
+                        setBrother(currentElement);
+                        break;
+                    }
+                    case "i": {
+                        setBrother(currentElement);
+                        Information information = searchSymbolTable(currentElement);
+                        currentNode.setSymbolName(information.getName());
+                        if (!information.getType().equals("boolean")) {
+                            System.out.println("type error");
+                            return;
+                        } else currentNode.type = information.getType();
+                        break;
+                    }
+                    default: {
+                        setBrother(currentElement);
+                    }
+                }
+                break;
+            }
+//           else' -> else { Blocklist }
+            case 39: {
+                switch (currentElement.getSymbolName()) {
+                    case "else": {
+                        setFather(currentElement);
+                        break;
+                    }
+                    default: {
+                        setBrother(currentElement);
+                    }
+                }
+                break;
+            }
+//            else' -> nought
+            case 40: {
+                setFather(currentElement);
+                break;
+            }
+//            Block -> while ( i S' S*  ) do { Blocklist }
+            case 41: {
+                switch (currentElement.getSymbolName()) {
+                    case "while": {
+                        setFather(currentElement);
+                        break;
+                    }
+                    case "i": {
+                        setBrother(currentElement);
+                        Information information = searchSymbolTable(currentElement);
+                        currentNode.setSymbolName(information.getName());
+                        if (!information.getType().equals("boolean")) {
+                            System.out.println("type error,should be boolean!");
+                            return;
+                        } else currentNode.type = information.getType();
+                        break;
+                    }
+                    default: {
+                        setBrother(currentElement);
+                        break;
+                    }
+                }
+                break;
+            }
+//            Block -> do { Blocklist } while { i S' S*  }
+            case 42: {
+                switch (currentElement.getSymbolName()) {
+                    case "do": {
+                        setFather(currentElement);
+                        break;
+                    }
+                    case "i": {
+                        setBrother(currentElement);
+                        Information information = searchSymbolTable(currentElement);
+                        currentNode.setSymbolName(information.getName());
+                        if (!information.getType().equals("boolean")) {
+                            System.out.println("type error,should be boolean!");
+                            return;
+                        } else currentNode.type = information.getType();
+                        break;
+                    }
+                    default: {
+                        setBrother(currentElement);
+                        break;
+                    }
+                }
+                break;
+            }
+//           S* -> && i S'
+            case 43: {
+                switch (currentElement.getSymbolName()) {
+                    case "&&": {
+                        setFather(currentElement);
+                        break;
+                    }
+                    case "i": {
+                        setBrother(currentElement);
+                        Information information = searchSymbolTable(currentElement);
+                        currentNode.setSymbolName(information.getName());
+                        if (!information.getType().equals("boolean")) {
+                            System.out.println("type error,should be boolean!");
+                            return;
+                        } else currentNode.type = information.getType();
+                        break;
+                    }
+                    case "S'": {
+                        setBrother(currentElement);
+                        break;
+                    }
+                }
+                break;
+            }
+//            S* -> || i S'
+            case 44: {
+                switch (currentElement.getSymbolName()) {
+                    case "||": {
+                        setFather(currentElement);
+                        break;
+                    }
+                    case "i": {
+                        setBrother(currentElement);
+                        Information information = searchSymbolTable(currentElement);
+                        currentNode.setSymbolName(information.getName());
+                        if (!information.getType().equals("boolean")) {
+                            System.out.println("type error,should be boolean!");
+                            return;
+                        } else currentNode.type = information.getType();
+                        break;
+                    }
+                    case "S'": {
+                        setBrother(currentElement);
+                        break;
+                    }
+                }
+                break;
+            }
+//            S' -> nought
+            case 45: {
+                setFather(currentElement);
+                break;
+            }
+//            S' -> rop i
+            case 46: {
+                switch (currentElement.getSymbolName()) {
+                    case "i": {
+                        setBrother(currentElement);
+                        Information information = searchSymbolTable(currentElement);
+                        currentNode.setSymbolName(information.getName());
+                        if (!information.getType().equals("boolean")) {
+                            System.out.println("type error,should be boolean!");
+                            return;
+                        } else currentNode.type = information.getType();
+                        break;
+                    }
+                    case "rop": {
+                        setFather(currentElement);
+                        break;
+                    }
+                }
+                break;
+            }
+//            S -> ( S )
+            case 47: {
+                break;
+            }
+//            S -> ! S
+            case 48: {
+                break;
+            }
+//            rop -> >
+            case 49: {
+                setFather(currentElement);
+                break;
+            }
+//            rop -> >=
+            case 50: {
+                setFather(currentElement);
+                break;
+            }
+//            rop -> <
+            case 51: {
+                setFather(currentElement);
+                break;
+            }
+//            rop -> <=
+            case 52: {
+                setFather(currentElement);
+                break;
+            }
+//            rop -> ==
+            case 53: {
+                setFather(currentElement);
+                break;
+            }
+//            rop -> !=
+            case 54: {
+                setFather(currentElement);
+                break;
+            }
+//            S* -> nought
+            case 55: {
                 break;
             }
         }
@@ -576,61 +786,99 @@ public class Actions {
     }
 
     public String ergodic(SymbolNode symbolNode1) {
-        System.out.println(symbolNode1.getSymbolName());
+//        System.out.println(symbolNode1.getSymbolName());
         if (symbolNode1.sonNode != null) {
             symbolNode1.setVariableName(ergodic(symbolNode1.sonNode));
         }
         if (symbolNode1.NextBrotherNode != null) {
-            switch (symbolNode1.NextBrotherNode.getSymbolName()){
-                case "E'":{
-                    return printResult(symbolNode1.NextBrotherNode.sonNode.getVariableName(),
+            switch (symbolNode1.NextBrotherNode.getSymbolName()) {
+                case "E'": {
+                    return addResult(symbolNode1.NextBrotherNode.sonNode.getVariableName(),
                             symbolNode1.getVariableName(),
                             ergodic(symbolNode1.NextBrotherNode.sonNode.NextBrotherNode),
                             newTemp());
                 }
-                case "N" :{
-                    return printResult(symbolNode1.getVariableName(),
+                case "N": {
+                    return addResult(symbolNode1.getVariableName(),
                             "_",
                             ergodic(symbolNode1.NextBrotherNode),
                             newTemp());
                 }
-                case "T'":{
-                    return printResult("*",
+                case "T'": {
+                    return addResult("*",
                             symbolNode1.getVariableName(),
                             ergodic(symbolNode1.NextBrotherNode.sonNode.NextBrotherNode),
                             newTemp());
                 }
-                case "B'":{
-                    return printResult(":=",
+                case "B'": {
+                    return addResult(":=",
                             ergodic(symbolNode1.NextBrotherNode.sonNode.NextBrotherNode),
                             "_",
                             symbolNode1.getVariableName());
                 }
-                case "E" :{symbolNode1.setVariableName(ergodic(symbolNode1.NextBrotherNode));break;}
-                default:ergodic(symbolNode1.NextBrotherNode);
+                case "E": {
+                    symbolNode1.setVariableName(ergodic(symbolNode1.NextBrotherNode));
+                    break;
+                }
+                case ":=": {
+                    return addResult(":=",
+                            symbolNode1.getVariableName(),
+                            "_",
+                            ergodic(symbolNode1.NextBrotherNode.NextBrotherNode));
+                }
+                case "i": {
+                    if (symbolNode1.getSymbolName().equals("type")) {
+                        ergodic(symbolNode1.NextBrotherNode);
+                        break;
+                    }
+                    if (!symbolNode1.NextBrotherNode.NextBrotherNode.getSymbolName().equals("S'")) {
+                        addResult("j",
+                                symbolNode1.NextBrotherNode.getVariableName(),
+                                "_", "0");
+                        break;
+                    }
+
+                }
+                case "S'":{
+                    addResult("j"+ergodic(symbolNode1.NextBrotherNode.sonNode),
+                            symbolNode1.getVariableName(),
+                            symbolNode1.NextBrotherNode.sonNode.NextBrotherNode.getVariableName(),
+                            squenceNumber+2+"");
+                    addResult("j",
+                            "_",
+                            "_",
+                            "0");
+                }
+//                case "S*":{
+//                    break;
+//                }
+                default:
+                    ergodic(symbolNode1.NextBrotherNode);
             }
+
         }
+
         return symbolNode1.getVariableName();
     }
 
-    public String newTemp() {
+    private String newTemp() {
         return "T" + temVariable++;
     }
 
-    private String printResult(String opr, String first, String second, String result) {
-        System.out.println(squenceNumber++ + "  " + "(" +
-                opr +
-                "," +
-                first +
-                "," +
-                second +
-                "," +
-                result +
-                ")");
+    private String addResult(String opr, String first, String second, String result) {
+        fourSet.addFour(squenceNumber++, opr, first, second, result);
         return result;
+    }
+
+    public void printResult() {
+        fourSet.printFour();
     }
 
     public SymbolNode getRoot() {
         return Root;
+    }
+
+    public void Backpatch(int value){
+
     }
 }

@@ -90,7 +90,7 @@ public class ProductionSets {
 
     private Set<String> nonterminals = new HashSet<>();
     private final int productionNumber = 100;
-    private final int MAXWIDTH = 10;
+    private final int MAXWIDTH = 15;
     private int currentNumber = 0;
     private int[] productionLengths = new int[productionNumber];
     private String[][] productionSet = new String[productionNumber][MAXWIDTH];
@@ -159,18 +159,27 @@ public class ProductionSets {
 //                "35" +
                 "N -> id \\" +
                 "N -> i \\" +
-                "T' -> == F T' \\" +
-                "T' -> > F T' \\" +
-                "T' -> >= F T' \\" +
-                "40" +
-                "T' -> < F T' \\" +
-                "T' -> <= F T' \\" +
-                "T' -> != F T' \\" +
-                "E' -> && T E' \\" +
-                "E' -> || T E' \\" +
+                "Block -> if ( i S' S* ) then { Blocklist } else' \\" +
+                "else' -> else { Blocklist } \\" +
+                "else' -> nought \\" +
+//                "40" +
+                "Block -> while ( i S' S*  ) do { Blocklist } \\" +
+                "Block -> do { Blocklist } while { i S' S*  } \\" +
+                "S* -> && i S' \\" +
+                "S* -> || i S' \\" +
+                "S' -> nought \\" +
 //                "45" +
-                "E' -> ! T E' \\" +
-                "" +
+                "S' -> rop i \\" +
+                "S -> ( S ) \\" +
+                "S -> ! S \\" +
+                "rop -> > \\" +
+                "rop -> >= \\" +
+//                "50" +
+                "rop -> < \\" +
+                "rop -> <= \\" +
+                "rop -> == \\" +
+                "rop -> != \\" +
+                "S* -> nought \\" +
                 "" +
                 "");
 //        for (int i = 0; i < currentNumber; i++) {
