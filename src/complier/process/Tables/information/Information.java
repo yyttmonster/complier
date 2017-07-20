@@ -19,6 +19,10 @@ public class Information {
 
     private char valueChar = ' ';
 
+    private int arrayItem = 1;
+
+    private int[] arrayNumber = new int[5];
+
 
     public Information(String name, String type, int processNumber) {
         this.name = name;
@@ -44,6 +48,67 @@ public class Information {
         return 0;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
 
+    public int getProcessNumber() {
+        return processNumber;
+    }
+
+    public void setProcessNumber(int processNumber) {
+        this.processNumber = processNumber;
+    }
+
+    public int getValueInt() {
+        return valueInt;
+    }
+
+    public void setValueInt(int valueInt) {
+        this.valueInt = valueInt;
+    }
+
+    public double getValueReal() {
+        return valueReal;
+    }
+
+    public void setValueReal(double valueReal) {
+        this.valueReal = valueReal;
+    }
+
+    public boolean isValueBoolean() {
+        return valueBoolean;
+    }
+
+    public void setValueBoolean(boolean valueBoolean) {
+        this.valueBoolean = valueBoolean;
+    }
+
+    public char getValueChar() {
+        return valueChar;
+    }
+
+    public void setValueChar(char valueChar) {
+        this.valueChar = valueChar;
+    }
+
+    public int getArrayItem() {
+        return arrayItem;
+    }
+
+    public void setArrayItem(int arrayItem) {
+        this.arrayItem = arrayItem;
+    }
+
+    public int[] getArrayNumber() {
+        return arrayNumber;
+    }
+
+    public void setArrayNumber(int[] arrayNumber) {
+        this.arrayNumber = arrayNumber;
+    }
 }

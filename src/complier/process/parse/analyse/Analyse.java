@@ -1,5 +1,6 @@
 package complier.process.parse.analyse;
 
+import complier.process.error.ParseException;
 import complier.process.lexer.handler.SymbolForParser;
 import complier.process.parse.lltable.ElementName;
 import complier.process.parse.lltable.LL1Table;
@@ -52,7 +53,7 @@ public class Analyse {
         symbolStack.push(new SymbolNode("FunctionList", 0));
     }
 
-    public boolean analysing() {
+    public boolean analysing() throws ParseException {
         int characterNuber = 0;
         while (symbolStack.size() > 0 && characterNuber < inputString.size()) {
             SymbolNode peek = symbolStack.pop();
@@ -72,8 +73,8 @@ public class Analyse {
                 int productionNumber = ll1Table.searchTable(new ElementName(peek.getSymbolName(), inputString.get(characterNuber).getNickname()));
                 if (productionNumber < 0) {
                     System.out.println(symbolStack.size() + " " + peek.getSymbolName() + " " + inputString.get(characterNuber).getNickname());
-                    System.out.println("LL1表里没你！！！");
-                    return false;
+//                    System.out.println("LL1表里没你！！！");
+                    throw new ParseException("There are someting wrong with character "+inputString.get(characterNuber).getNickname());
                 }
 //                    semanticAction.nonterminalsAction(peek, productionNumber + 1, symbolStack, inputString.get(characterNuber));
 

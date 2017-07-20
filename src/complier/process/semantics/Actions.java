@@ -19,7 +19,11 @@ public class Actions {
 
     private Four fourSet = new Four();
 
-    private HashMap<Integer,Integer> mergeMap = new HashMap<>();
+    private int arrayitemNumber = 1;
+
+    private String currentArray = "";
+
+    private HashMap<Integer, Integer> mergeMap = new HashMap<>();
 
     String haha = "_";
 
@@ -123,21 +127,25 @@ public class Actions {
 //            type -> int
             case 5: {
                 setFather(currentElement);
+                currentNode.type = currentElement.getVariableName();
                 break;
             }
 //            type -> boolean
             case 6: {
                 setFather(currentElement);
+                currentNode.type = currentElement.getVariableName();
                 break;
             }
 //            type -> char
             case 7: {
                 setFather(currentElement);
+                currentNode.type = currentElement.getVariableName();
                 break;
             }
 //            type -> real
             case 8: {
                 setFather(currentElement);
+                currentNode.type = currentElement.getVariableName();
                 break;
             }
 //            arglist -> nought
@@ -203,6 +211,11 @@ public class Actions {
                 switch (currentElement.getSymbolName()) {
                     case ";": {
                         setBrother(currentElement);
+                        if (!currentArray.equals("")){
+                            symbolTable.search(currentArray).setArrayItem(arrayitemNumber);
+                            arrayitemNumber = 1;
+                            currentArray = "";
+                        }
                         break;
                     }
                     default: {
@@ -217,6 +230,7 @@ public class Actions {
                 switch (currentElement.getSymbolName()) {
                     case ";": {
                         setBrother(currentElement);
+                        arrayitemNumber = 1;
                         break;
                     }
                     default: {
@@ -346,16 +360,21 @@ public class Actions {
                         setFather(currentElement);
                         break;
                     }
-                    case ":=": {
-                        setBrother(currentElement);
-                        break;
-                    }
-                    case "E": {
-                        setBrother(currentElement);
-                        currentElement.type = currentNode.LastBrotherNode.LastBrotherNode.type;
-                        break;
-                    }
+
+//                    case ":=": {
+//                        setBrother(currentElement);
+//                        break;
+//                    }
+//                    case "E": {
+//                        setBrother(currentElement);
+//                        currentElement.type = currentNode.LastBrotherNode.LastBrotherNode.type;
+//                        break;
+//                    }
                     case ";": {
+                        setBrother(currentElement);
+                        break;
+                    }
+                    default: {
                         setBrother(currentElement);
                         break;
                     }
@@ -516,13 +535,22 @@ public class Actions {
             }
 //            N -> i
             case 37: {
-                setFather(currentElement);
-                Information information = searchSymbolTable(currentElement);
-                currentNode.setSymbolName(information.getName());
-                if (!information.getType().equals(currentNode.fatherNode.type)) {
-                    System.out.println("type error");
-                    return;
-                } else currentNode.type = information.getType();
+                switch (currentElement.getSymbolName()) {
+                    case "i": {
+                        setFather(currentElement);
+                        Information information = searchSymbolTable(currentElement);
+                        currentNode.setSymbolName(information.getName());
+                        if (!information.getType().equals(currentNode.fatherNode.type)) {
+                            System.out.println("type error");
+                            return;
+                        } else currentNode.type = information.getType();
+                        break;
+                    }
+                    case "item": {
+                        setBrother(currentElement);
+                        break;
+                    }
+                }
                 break;
             }
 //            Block -> if ( i S' S* ) { Blocklist } else'
@@ -733,6 +761,65 @@ public class Actions {
             case 55: {
                 break;
             }
+//            Declaration -> array type i [ E ] item
+            case 56: {
+                switch (currentElement.getSymbolName()) {
+                    case "array": {
+                        setFather(currentElement);
+                        break;
+                    }
+                    case "i": {
+                        arrayitemNumber = 1;
+                        setBrother(currentElement);
+                        currentElement.type = currentNode.LastBrotherNode.type;
+                        inserSymbolTable(currentNode);
+                        currentArray = currentNode.getVariableName();
+                        break;
+                    }
+                    default: {
+                        setBrother(currentElement);
+                        break;
+                    }
+                }
+                break;
+            }
+//            item -> [ E ] item
+            case 57: {
+                switch (currentElement.getSymbolName()) {
+                    case "[": {
+                        arrayitemNumber++;
+                        setFather(currentElement);
+                        break;
+                    }
+                    default: {
+                        setBrother(currentElement);
+                        break;
+                    }
+                }
+                break;
+            }
+//            item -> nought
+            case 58: {
+                break;
+            }
+//            assignment -> := E
+            case 59: {
+                switch (currentElement.getSymbolName()) {
+                    case "item": {
+                        setFather(currentElement);
+                        break;
+                    }
+                    case ":=": {
+                        setBrother(currentElement);
+                        currentNode.setVariableName("[]=");
+                        break;
+                    }
+                    default: {
+                        setBrother(currentElement);
+                        break;
+                    }
+                }
+            }
         }
 
     }
@@ -818,9 +905,16 @@ public class Actions {
                 }
                 case "E": {
                     symbolNode1.setVariableName(ergodic(symbolNode1.NextBrotherNode));
+
                     break;
                 }
+//                case "item":{
+//
+//                }
                 case ":=": {
+                    if (symbolNode1.getSymbolName().equals("item")){
+
+                    }
                     return addResult(":=",
                             symbolNode1.getVariableName(),
                             "_",
@@ -834,24 +928,26 @@ public class Actions {
                     if (!symbolNode1.NextBrotherNode.NextBrotherNode.getSymbolName().equals("S'")) {
                         addResult("j",
                                 symbolNode1.NextBrotherNode.getVariableName(),
-                                "_", "0");
+                                "_",
+                                squenceNumber + 4 + "");
                         break;
                     }
 
                 }
-                case "S'":{
-                    addResult("j"+ergodic(symbolNode1.NextBrotherNode.sonNode),
+                case "S'": {
+                    addResult("j" + ergodic(symbolNode1.NextBrotherNode.sonNode),
                             symbolNode1.getVariableName(),
                             symbolNode1.NextBrotherNode.sonNode.NextBrotherNode.getVariableName(),
-                            squenceNumber+2+"");
+                            squenceNumber + 2 + "");
                     addResult("j",
                             "_",
                             "_",
-                            "0");
+                            squenceNumber + 4 + "");
                 }
 //                case "S*":{
 //                    break;
 //                }
+//                    case ""
                 default:
                     ergodic(symbolNode1.NextBrotherNode);
             }
@@ -878,7 +974,7 @@ public class Actions {
         return Root;
     }
 
-    public void Backpatch(int value){
+    public void Backpatch(int value) {
 
     }
 }

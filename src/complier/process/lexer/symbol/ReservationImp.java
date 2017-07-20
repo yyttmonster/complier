@@ -22,7 +22,8 @@ public class ReservationImp implements SymbolInterface {
     private static final int TRUE = 16;
 
     private static final int FALSE = 17;
-//    private static final int ARRAY = 16;
+
+    private static final int ARRAY = 18;
 
     @Override
     public void getMap(HashMap<String, Integer> hashMap) {
@@ -31,8 +32,8 @@ public class ReservationImp implements SymbolInterface {
         hashMap.put("else", ELSE);
         hashMap.put("while", WHILE);
         hashMap.put("do", DO);
-        hashMap.put("true",TRUE);
-        hashMap.put("false",FALSE);
-//        hashMap.put("array",ARRAY);
+        hashMap.put("true", TRUE);
+        hashMap.put("false", FALSE);
+        hashMap.put("array", ARRAY);
     }
 }

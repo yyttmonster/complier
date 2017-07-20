@@ -143,7 +143,8 @@ public class ProductionSets {
                 "B' -> := E \\" +
                 "B' -> nought \\" +
                 "" +
-                "Assignment -> i := E  \\" +
+                "Assignment -> i assignment ; \\" +
+//                "Assignment -> i := E  \\" +
 //                "25" +
                 "E -> T E' \\" +
                 "E' -> + T E' \\" +
@@ -158,7 +159,7 @@ public class ProductionSets {
                 "N -> ( E ) \\" +
 //                "35" +
                 "N -> id \\" +
-                "N -> i \\" +
+                "N -> i item \\" +
                 "Block -> if ( i S' S* ) then { Blocklist } else' \\" +
                 "else' -> else { Blocklist } \\" +
                 "else' -> nought \\" +
@@ -180,7 +181,13 @@ public class ProductionSets {
                 "rop -> == \\" +
                 "rop -> != \\" +
                 "S* -> nought \\" +
+//                "55" +
+                "Declaration -> array type i [ E ] item \\" +
+                "item -> [ E ] item \\" +
+                "item -> nought \\" +
                 "" +
+                "assignment -> := E \\" +
+                "assignment -> item := E \\" +
                 "");
 //        for (int i = 0; i < currentNumber; i++) {
 //            System.out.println(productionSet[i][0] + "->" + productionSet[i][1] + " " + productionSet[i][2]);
@@ -204,7 +211,7 @@ public class ProductionSets {
 //        System.out.println(nonterminals.contains("namelist"));
         for (String string : nonterminals) {
             System.out.print(string + ":  ");
-            for (String firstChar : followSet.get(string)) {
+            for (String firstChar : firstSet.get(string)) {
                 System.out.print(firstChar + ",");
             }
             System.out.println();

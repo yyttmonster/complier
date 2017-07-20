@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 /**
  * digital +、++、-、--、*、:=、
- * logical ∧、∨、┐、<、<=、>、>=、=、!=>
+ * logical ∧、∨、┐、<、<=、>、>=、==、!=>
  * a identity correspond a operator
  * the identity of digital operator is between 21 to 30
  * the identity of logical operator is between 31 to 40
@@ -78,7 +78,7 @@ public class OperatorImp implements SymbolInterface {
     private static final int LESSEQUAL = 37;
 
     /**
-     * operate =
+     * operate ==
      */
     private static final int ISEQUAL = 38;
 
@@ -102,7 +102,7 @@ public class OperatorImp implements SymbolInterface {
         hashMap.put(">=", MOREEQUAL);
         hashMap.put("<", LESS);
         hashMap.put("<=", LESSEQUAL);
-        hashMap.put("=", ISEQUAL);
+        hashMap.put("==", ISEQUAL);
         hashMap.put("!=", NOTEQUAL);
     }
 
